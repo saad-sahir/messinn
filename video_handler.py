@@ -4,8 +4,8 @@ import cv2 as cv
 import pandas as pd
 
 import os, sys
-if 'modelV' not in sys.path:
-    sys.path.append('modelV')
+# if 'modelV' not in sys.path:
+    # sys.path.append('modelV')
 
 from utils import calculate_center, process_pitch_csv, scale_points, calculate_camera_motion
 from homography import homography
@@ -14,8 +14,8 @@ from postprocess import model_postprocess
 
 ## 
 
-pitch_path='./model4/pitch.jpg'
-pitch_csv='./model4/pitch_map.csv'
+pitch_path='./pitch.jpg'
+pitch_csv='./pitch_map.csv'
 
 def video_handler(video_path, keypoint_weights, player_weights, save_path=None, pitch_path=pitch_path, pitch_csv=pitch_csv, t=100000, show=True, m=False):
     cap = cv.VideoCapture(video_path)
@@ -134,15 +134,3 @@ def video_handler(video_path, keypoint_weights, player_weights, save_path=None, 
     out.release() if save_path else None
     cv.destroyAllWindows() if show else None
     return kpt_history, homography_history, player_history
-
-
-if __name__ == '__main__':
-    video = './matches/espned1.mp4'
-    kpt_weights = './modelV/kpt_weights.pt'
-    player_weights = './modelV/player_weights.pt'
-
-    save_path = f"./modelV/results/{video.split('/')[-1]}"
-    show = True
-    m = False
-
-    video_handler(video, kpt_weights, player_weights, save_path=save_path, show=show, m=m)
