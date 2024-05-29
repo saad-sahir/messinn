@@ -1,6 +1,6 @@
 MessiNN: Football Analysis using Computer Vision
 
-Welcome to the repository for MessiNN, a project designed for real-time analysis of football matches using advanced computer vision techniques. This README provides an overview of the project, installation instructions, usage guidelines, and additional resources.
+Welcome to the repository for MessiNN, a project designed for real-time analysis of football matches using advanced computer vision techniques. 
 
 Table of Contents
 
