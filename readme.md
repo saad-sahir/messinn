@@ -19,12 +19,3 @@ Features
 	•	Player and Ball Detection: Utilizes YOLOv8 for identifying players and the ball.
 	•	Camera Calibration: Adjusts for dynamic camera movements during the match.
 	•	Homography Transformations: Provides a bird’s eye view of the field from any camera angle.
-
-Methodology
-
-The MessiNN model pipeline consists of several stages:
-
-	1.	Field Localization: Identifies and maps the football field using a custom keypoint detection YOLO model.
-	2.	Player and Ball Detection: Uses a custom YOLOv8 model to detect players and the ball.
-	3.	Camera Calibration: Adjusts the field mapping based on camera movements.
-	4.	Homography Transformation: Converts the camera view to a bird’s eye view for analysis.
