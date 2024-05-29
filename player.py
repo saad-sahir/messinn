@@ -4,41 +4,21 @@ import numpy as np
 def process_players(frame, player_model):
     results = player_model.predict(frame, verbose = False)
     players = results[0].boxes.data
-    players = get_colors(frame, players)
+    players = find_dominant_colors(frame, players)
     return players
 
-def get_colors(frame, players):
-    hsv_frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
-    
-    blue_purple_lower = np.array([100, 50, 50])
-    blue_purple_upper = np.array([150, 255, 255])
-    
-    white_lower = np.array([0, 0, 200])
-    white_upper = np.array([180, 30, 255])
-    
-    classified_players = []
-    
-    for player in players:
-        x_min, y_min, x_max, y_max, confidence, class_id = player
-        player_bbox = hsv_frame[int(y_min):int(y_max), int(x_min):int(x_max)]
-        
-        blue_purple_mask = cv.inRange(player_bbox, blue_purple_lower, blue_purple_upper)
-        white_mask = cv.inRange(player_bbox, white_lower, white_upper)
-        
-        blue_purple_count = np.sum(blue_purple_mask)
-        white_count = np.sum(white_mask)
-        
-        if blue_purple_count > white_count:
-            team = 1  # Team with blue/purple
-        elif blue_purple_count < white_count:
-            team = 0  # Team with white
-        else:
-            team = 2
-        
-        classified_player = [x_min, y_min, x_max, y_max, confidence, class_id, team]
-        classified_players.append(classified_player)
-    
-    return classified_players
+def find_dominant_colors(pixels, n_colors=3):
+    """Find dominant colors in a set of pixels using K-Means, optimized by using smaller pixel sets."""
+    kmeans = MiniBatchKMeans(n_clusters=n_colors)
+    kmeans.fit(pixels)
+    counter = Counter(kmeans.labels_)
+    ordered_colors = [kmeans.cluster_centers_[i] for i in counter.keys()]
+    dominant_colors = [tuple(int(component) for component in color) for color in ordered_colors]
+    return dominant_colors
+
+def filter_colors(dominant_colors):
+    """Filter colors based on predefined RGB ranges."""
+    return [color for color in dominant_colors if not (50 < color[0] < 150 and 100 < color[1] < 255 and 0 < color[2] < 100)]
 
 def draw_players(frame, players):
     for player in players:
