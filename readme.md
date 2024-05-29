@@ -6,7 +6,7 @@ Table of Contents
 
 	1.	Introduction
 	2.	Features
-    3.  Methodology
+	3. Methodology
 
 Introduction
 
