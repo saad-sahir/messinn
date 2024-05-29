@@ -34,3 +34,6 @@ MessiNN leverages a custom YOLO-based model architecture to analyze spatial stra
 
 <h3>Real-Time Performance</h3>
 <b>Frame Skipping Strategy:</b> Processes one out of every four frames to maintain real-time analysis capability without losing critical information.
+
+<h2>Usage</h2>
+Add video path to main.py and run
